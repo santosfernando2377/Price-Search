@@ -72,8 +72,10 @@ async function googleShopping(pesquisa) {
             for (let index = 0; index < preco.length; index++) {    
             
                 preco = element[index].innerText;
-                
-                return preco
+
+                preco.toString();
+
+                return preco.replace('R$ ','');
     
             }
         });

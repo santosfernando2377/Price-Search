@@ -1,7 +1,7 @@
 {
   "name": "web-scraping",
   "version": "1.0.0",
-  "description": "Web Scraping Mercado Livre",
+  "description": "Web Scraping Mercado Livre/Google Shopping",
   "main": "index.js",
   "type": "module",
   "scripts": {

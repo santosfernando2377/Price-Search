@@ -1,5 +1,6 @@
 import express from 'express';
 import googleShopping from '../../utils/googleShopping.js';
+import Product from '../../models/products/index.js';
 
 const router = express.Router();
 
@@ -16,6 +17,8 @@ router.get('/', async (req, res) => {
     try {
 
        const resultado_pesquisa_googles_shopping = await googleShopping(produto);
+
+       await Product.create(resultado_pesquisa_googles_shopping);
        
        res.status(200).json({
             'Product': resultado_pesquisa_googles_shopping
