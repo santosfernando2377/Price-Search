@@ -2,6 +2,12 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import morganBody from 'morgan-body';
+
+/**
+ * Rotas
+ */
+
+import auth from './routes/auth/index.js';
 import googleShopping from './routes/googleShopping/index.js';
 import mercadolivre from './routes/mercadoLivre/index.js';
 
@@ -19,6 +25,7 @@ app.use(express.json());
 
 morganBody(app);
 
+app.use('/login', auth);
 app.use('/google', googleShopping);
 app.use('/mercadolivre', mercadolivre);
 
