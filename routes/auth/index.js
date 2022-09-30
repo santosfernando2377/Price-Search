@@ -1,48 +1,47 @@
 import express from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import User from "../../models/users/index.js";
 
 const router = express.Router();
 
-
 router.get('/', async (req, res) => {
 
-    const {Email, Password} = req.body
+    const {Email, Password} = req.query
 
     if (!Email || Email == '') {
-        res.status(406).json({
+        return res.status(406).json({
             'Message':'Campo Name é obrigatório!'
         })
     }
 
     if (!Password || Password == '') {
-        res.status(406).json({
+        return res.status(406).json({
             'Message':'Campo Name é obrigatório!'
+        })
+    }
+
+    const user = await User.findOne({ Email: Email });
+
+    const check_password = await bcrypt.compare(Password, user.Password)
+    
+    if (!check_password) {
+        return res.status(401).json({
+            'Message':'Usuário ou Senha Incorreto!'
         })
     }
 
     try {
         
-        const user = await User.findOne({ Email: Email, Password: Password })
+        const secret = process.env.SECRET_KEY
+        const token = jwt.sign({
+            id: user._id,
 
-        if (Boolean(user) == true) {
+        }, secret);
 
-            console.log(user.Active)
-            
-            if (user.Active == true) {
-                return res.status(200).json({
-                    'Message':'Usuário Autenticado com Sucesso!'
-                });    
-            } else {
-                return res.status(401).json({
-                    'Message':'Usuário Desativado!'
-                });
-            }
-               
-        } else {
-            return res.status(401).json({
-                'Message':'Usuário ou Senha Incorreto!'
-            });
-        }
+        return res.status(200).json({
+            'Message':'Usuário Autenticado com sucesso!', token
+        })
 
     } catch (error) {
         res.status(500).json({
@@ -50,9 +49,7 @@ router.get('/', async (req, res) => {
         }) 
     }
 
-
 })
-
 
 router.post('/', async (req, res) => {
 
@@ -78,10 +75,13 @@ router.post('/', async (req, res) => {
 
     let Active = true;
 
+    const salt = await bcrypt.genSalt(12);
+    const password_hash = await bcrypt.hash(Password, salt);
+
     const tenant = {
         Name,
         Email,
-        Password,
+        Password: password_hash,
         Active
     }
 

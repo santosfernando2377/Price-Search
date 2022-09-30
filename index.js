@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import morganBody from 'morgan-body';
+import dotenv from 'dotenv';
+dotenv.config();
 
 /**
  * Rotas
