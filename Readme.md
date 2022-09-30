@@ -36,8 +36,8 @@ Para baixar o projeto clique faça um `git clone` do projeto. Após fazer o clon
 var axios = require('axios');
 var data = JSON.stringify({
   "Name": "Fernando Soares",
-  "Email": "santosfernando2377@gmail.com",
-  "Password": "Fernando34778929"
+  "Email": "teste@gmail.com",
+  "Password": "Teste123"
 });
 
 var config = {
@@ -63,7 +63,7 @@ var axios = require('axios');
 
 var config = {
   method: 'get',
-  url: 'http://localhost:3000/login?Email=santosfernando2377@gmail.com&Password=Fernando34778929',
+  url: 'http://localhost:3000/login?Email=teste@gmail.com&Password=Teste123',
   headers: { 
     'Content-Type': 'application/json'
   }
