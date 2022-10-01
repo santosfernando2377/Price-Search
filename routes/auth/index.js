@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../../models/users/index.js";
+import validaToken from "../../utils/validaToken.js";
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
 
     if (!Password || Password == '') {
         return res.status(406).json({
-            'Message':'Campo Name é obrigatório!'
+            'Message':'Campo Password é obrigatório!'
         })
     }
 
@@ -44,7 +45,7 @@ router.get('/', async (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             'Error': error
         }) 
     }
@@ -63,13 +64,13 @@ router.post('/', async (req, res) => {
 
     if (!Email || Email == '') {
         return res.status(406).json({
-            'Message':'Campo Name é obrigatório!'
+            'Message':'Campo Email é obrigatório!'
         });
     }
 
     if (!Password || Password == '') {
         return res.status(406).json({
-            'Message':'Campo Name é obrigatório!'
+            'Message':'Campo Password é obrigatório!'
         });
     }
 
@@ -100,11 +101,51 @@ router.post('/', async (req, res) => {
             });   
         }
     } catch (error) {
-        res.status(500).json({
+         return res.status(500).json({
             'Error': error
         });
     }
 
+
+})
+
+router.put('/', validaToken, async (req, res) => {
+
+    const { Email, Active } = req.body
+
+    if (!Email || Email == '') {
+        return res.status(406).json({
+            'Message':'Campo Email é obrigatório!'
+        });
+    }
+
+    try {
+        const consulta_usuario_banco = await User.findOne({ Email: Email });
+
+        if (Boolean(consulta_usuario_banco)) {
+            await User.updateOne({Email: consulta_usuario_banco.Email}, {Active: Active})
+
+            if (Active == true) {
+                return res.status(200).json({
+                    'Message': 'Usuário foi ativado com sucesso!'
+                });
+            } else {
+                return res.status(200).json({
+                    'Message': 'Usuário foi desativado com sucesso!'
+                });
+            }
+
+        } else {
+            return res.status(500).json({
+                'Message': 'Não foi possível realizar ação. Por gentileza, entrar em contato com administrador.'
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            'Error': error
+        });
+    }
 
 })
 
