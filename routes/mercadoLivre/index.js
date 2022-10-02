@@ -1,22 +1,13 @@
 import express from 'express';
 import mercadoLivre from '../../utils/mercadoLivre.js';
 import Product from '../../models/products/index.js';
-import User from '../../models/users/index.js';
 import validaToken from '../../utils/validaToken.js';
 
 const router = express.Router();
 
 router.get('/', validaToken, async (req, res) => {
 
-    const { produto, id } = req.body
- 
-    const user = await User.findById(id,'-Password');
-    
-    if(!user) {
-      return res.status(404).json({
-         'Message':'Usuário não encontrado!'
-      })
-    }
+    const { produto } = req.body
 
     if(!produto || produto == '') {
       return res.status(406).json({
