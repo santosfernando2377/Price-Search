@@ -4,7 +4,7 @@ async function googleShopping(pesquisa) {
     
     let produto = pesquisa;
     
-    const browser = await pup.launch({headless: true}); // Instância o navegador
+    const browser = await pup.launch({headless: true, args: ['--no-sandbox']}); // Instância o navegador
     const page = await browser.newPage(); // Instância uma nova página
     
     await page.goto('https://shopping.google.com.br/'); // Redireciona para URL
