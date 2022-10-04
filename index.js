@@ -12,6 +12,7 @@ dotenv.config();
 import auth from './routes/auth/index.js';
 import googleShopping from './routes/googleShopping/index.js';
 import mercadolivre from './routes/mercadoLivre/index.js';
+import search from './routes/search/index.js';
 
 const app = express();
 
@@ -30,6 +31,7 @@ morganBody(app);
 app.use('/login', auth);
 app.use('/google', googleShopping);
 app.use('/mercadolivre', mercadolivre);
+app.use ('/pesquisa', search);
 
 app.get('/', (req, res) => {
     res.json({
