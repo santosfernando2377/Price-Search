@@ -41,7 +41,10 @@ app.get('/', (req, res) => {
     })
 });
 
-mongoose.connect(`mongodb://localhost:27017/BigProducts?retryWrites=true&w=majority`)
+const { DB_USER, DB_PASS, DB_URL } = process.env
+
+
+mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@${DB_URL}`)
 .then(() => {
     console.log('Conectado ao banco de dados!');
     app.listen(3000);    
