@@ -18,7 +18,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 * Você instalou a versão mais recente do `Node.js e Navegador Google Chrome`
 * Você tem uma máquina `Windows / Linux / Mac`. O sistema irá funcionar em todos os sistemas operacionais.
 
-## 🚀 Instalando *To do List*
+## 🚀 Instalando *Pesquisa de Preco*
 
 Para instalar o To do List, siga estas etapas:
 
