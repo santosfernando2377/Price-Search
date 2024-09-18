@@ -19,7 +19,7 @@ router.post('/', validaToken, async (req, res) => {
 
     try {
 
-        const pesquisa_bd_produtos = await Product.find({ Title: { $regex: `${Produto.Title}`} });
+        const pesquisa_bd_produtos = await Product.find({ Title: { $regex: `${Produto.Title.toLowerCase()}`} });
 
         return res.status(200).json({
             Produtos: pesquisa_bd_produtos

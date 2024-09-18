@@ -4,7 +4,7 @@ async function mercadoLivre(pesquisa) {
     
     let produto = pesquisa;
     
-    const browser = await pup.launch({headless: true, args: ['--no-sandbox']}); // Instância o navegador
+    const browser = await pup.launch({headless: false, args: ['--no-sandbox']}); // Instância o navegador
     const page = await browser.newPage(); // Instância uma nova página
     
     await page.goto('https://www.mercadolivre.com.br/'); // Redireciona para URL
@@ -28,7 +28,7 @@ async function mercadoLivre(pesquisa) {
         await page.waitForSelector('.ui-pdp-title');
         await page.waitForSelector('.andes-money-amount__fraction');
 
-        const Title = await page.$eval('.ui-pdp-title', element => element.innerText);
+        const Title = await page.$eval('.ui-pdp-title', element => element.innerText.toLowerCase());
         const Price = await page.$eval('.andes-money-amount__fraction', element => element.innerText);
         
         const Buy = link;

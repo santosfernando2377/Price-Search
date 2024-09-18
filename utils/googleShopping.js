@@ -57,7 +57,7 @@ async function googleShopping(pesquisa) {
 
             for (let index = 0; index < titulo.length; index++) {    
                 
-                titulo = element[index].innerText;
+                titulo = element[index].innerText.toLowerCase();
                 
                 return titulo
     
